@@ -8,6 +8,7 @@ from tkinter import Button
 class Banner:
     
     def __init__(self, master):
+        # MENU BAR SECTION
         # Remove dashes from the menubar drop down
         master.option_add('*tearOff', False)
         self.menubar = Menu(master)
@@ -19,6 +20,17 @@ class Banner:
 
         self.menubar.add_cascade(menu=file, label='File')
 
+        # BANNER IMAGE SECTION
+        # Create widgets
+        self.banner_frame = ttk.Frame(master, height=180, width=480, relief='solid')
+        self.banner_img_label = ttk.Label(self.banner_frame)
+
+        # Configure widgets
+        self.banner_frame.pack_propagate(False)
+
+        # Place widgets
+        self.banner_frame.pack()
+
 class ChecklistItem:
 
     def __init__(self, master, task):
@@ -27,7 +39,7 @@ class ChecklistItem:
         self.value = StringVar()
         self.item = ttk.Checkbutton(master, text=self.task)
         self.item.config(variable=self.value, onvalue="Complete", offvalue="Imcomplete")
-        
+
 class Content:
     
     def __init__(self, master, checklist=None):
