@@ -19,6 +19,15 @@ class Banner:
 
         self.menubar.add_cascade(menu=file, label='File')
 
+class ChecklistItem:
+
+    def __init__(self, master, task):
+        self.task = task
+        # Allows the Checkbutton value to be dynamic
+        self.value = StringVar()
+        self.item = ttk.Checkbutton(master, text=self.task)
+        self.item.config(variable=self.value, onvalue="Complete", offvalue="Imcomplete")
+        
 class Content:
     
     def __init__(self, master, checklist=None):
