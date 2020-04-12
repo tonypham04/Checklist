@@ -56,7 +56,7 @@ class Content:
             self.checklist = []
         else:
             self.checklist = checklist
-        self.add_button = Button(self.button_frame, text="Add Task", command=self.add_task)
+        self.add_button = Button(self.button_frame, text="\u271a Add Task", command=self.add_task)
 
         # Configure widgets
         self.checklist_frame.pack_propagate(False)
@@ -74,6 +74,8 @@ class Content:
     def add_task(self):
         # Create widgets
         add_window = Toplevel(self.button_frame, height=120, width=480)
+        # Prevent window resizing along x and y
+        add_window.resizable(False, False)
         add_frame = ttk.Frame(add_window)
         add_label = ttk.Label(add_frame, text="Task Name: ")
         add_entry = ttk.Entry(add_frame, width=48)
