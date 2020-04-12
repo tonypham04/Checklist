@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkinter import StringVar
 from tkinter import Button
+from tkinter import Toplevel
 
 class Banner:
     
@@ -55,7 +56,7 @@ class Content:
             self.checklist = []
         else:
             self.checklist = checklist
-        self.add_button = Button(self.button_frame, text="Add Task")
+        self.add_button = Button(self.button_frame, text="Add Task", command=self.add_task)
 
         # Configure widgets
         self.checklist_frame.pack_propagate(False)
@@ -65,6 +66,38 @@ class Content:
         self.add_button.pack(pady=15)
         self.checklist_frame.pack()
         self.button_frame.pack()
+
+    def display_tasks(self):
+        for task in self.checklist:
+            task.item.pack(anchor='w', pady=5, padx=5)
+
+    def add_task(self):
+        # Create widgets
+        add_window = Toplevel(self.button_frame, height=120, width=480)
+        add_frame = ttk.Frame(add_window)
+        add_label = ttk.Label(add_frame, text="Task Name: ")
+        add_entry = ttk.Entry(add_frame, width=48)
+        submit_button = Button(add_frame, text="Submit", command=lambda: self.submit(add_entry.get(), add_window))
+        cancel_button = Button(add_frame, text="Cancel", command=lambda: self.cancel(add_window))
+
+        # Place widgets
+        add_label.pack(side='left')
+        add_entry.pack(side='left')
+        submit_button.pack(side='left')
+        cancel_button.pack(side='left')
+        add_frame.pack()
+
+    def cancel(self, master):
+        master.destroy()
+
+    def submit(self, task, master):
+        if task != "":
+            new_task = ChecklistItem(self.checklist_frame, task)
+            self.checklist.append(new_task)
+            self.cancel(master)
+            self.display_tasks()
+        else:
+            messagebox.showerror(title="Invalid entry", message="A task cannot be blank.")
 
 class App:
     
