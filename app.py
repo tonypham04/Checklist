@@ -38,6 +38,7 @@ class ChecklistItem:
         self.task = task
         # Allows the Checkbutton value to be dynamic
         self.value = StringVar()
+        self.value.set("Imcomplete")
         self.item = ttk.Checkbutton(master, text=self.task)
         self.item.config(variable=self.value, onvalue="Complete", offvalue="Imcomplete")
 
@@ -56,6 +57,10 @@ class Content:
             self.checklist = []
         else:
             self.checklist = checklist
+
+        for task in self.checklist:
+            task.config(command=self.update_state)
+
         self.add_button = Button(self.button_frame, text="\u271a Add Task", command=self.add_task)
 
         # Configure widgets
@@ -95,11 +100,19 @@ class Content:
     def submit(self, task, master):
         if task != "":
             new_task = ChecklistItem(self.checklist_frame, task)
+            new_task.item.config(command=self.update_state)
             self.checklist.append(new_task)
             self.cancel(master)
             self.display_tasks()
         else:
             messagebox.showerror(title="Invalid entry", message="A task cannot be blank.")
+
+    def update_state(self):
+        for task in self.checklist:
+            if task.value.get() == "Complete":
+                self.checklist.remove(task)
+                task.item.destroy()
+        self.display_tasks()
 
 class App:
     
