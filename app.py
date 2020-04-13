@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import StringVar
 from tkinter import Button
 from tkinter import Toplevel
+from tkinter import PhotoImage
 
 class Banner:
     
@@ -16,20 +17,23 @@ class Banner:
         master.config(menu=self.menubar)
         
         file = Menu(self.menubar)
+        themes = Menu(self.menubar)
 
         file.add_command(label='Test', command=lambda: messagebox.showinfo(title='Test', message='This is a test.'))
 
         self.menubar.add_cascade(menu=file, label='File')
+        self.menubar.add_cascade(menu=themes, label='Themes')
 
         # BANNER IMAGE SECTION
         # Create widgets
         self.banner_frame = ttk.Frame(master, height=180, width=480, relief='solid')
+        self.banner_img = PhotoImage(file='images/maple_leaves.png')
         self.banner_img_label = ttk.Label(self.banner_frame)
-
-        # Configure widgets
-        self.banner_frame.pack_propagate(False)
+        self.banner_img_label.img = self.banner_img
+        self.banner_img_label.config(image=self.banner_img_label.img)
 
         # Place widgets
+        self.banner_img_label.pack()
         self.banner_frame.pack()
 
 class ChecklistItem:
