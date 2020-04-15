@@ -106,6 +106,7 @@ class Content:
         add_frame = ttk.Frame(add_window)
         add_label = ttk.Label(add_frame, text="Task Name: ")
         add_entry = ttk.Entry(add_frame, width=48)
+        add_entry.bind('<Return>', lambda e: self.submit(add_entry.get(), add_window))
         submit_button = Button(add_frame, text="Submit", command=lambda: self.submit(add_entry.get(), add_window))
         cancel_button = Button(add_frame, text="Cancel", command=lambda: self.cancel(add_window))
 
