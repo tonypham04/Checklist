@@ -11,6 +11,9 @@ class App:
         self.banner = Banner(master, default_image_path)
         self.content = Content(master)
 
+        # KEYBOARD SHORTCUTS SECTION
+        master.bind('<Control-n>', lambda e: self.content.add_task())
+
         # MENU BAR SECTION
         master.option_add('*tearOff', False)
         self.menubar = Menu(master)
@@ -19,6 +22,8 @@ class App:
         # FILE MENU
         file = Menu(self.menubar)
         file.add_command(label='Test', command=lambda: messagebox.showinfo(title='Test', message='This is a test.'))
+        file.add_command(label='Add Task', command=lambda: self.content.add_task())
+        file.entryconfig('Add Task', accelerator='CTRL+N')
         self.menubar.add_cascade(menu=file, label='File')
 
         # THEMES MENU
