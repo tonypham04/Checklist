@@ -7,6 +7,8 @@ from content import Content
 class App:
     
     def __init__(self, master):
+        # Prevent the app window from being resized
+        master.resizable(False, False)
         default_image_path = 'images/gimp_themes/maple_leaves.png'
         self.banner = Banner(master, default_image_path)
         self.content = Content(master)
