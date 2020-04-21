@@ -45,6 +45,7 @@ class Content:
     def add_task(self):
         # Create and configure the window for adding tasks
         add_window = Toplevel(self.checklist_frame, width=480, height=40)
+        add_window.title('Add Task')
         # Prevent window resizing along x and y
         add_window.resizable(False, False)
         # Offset is by default relative to the screen; need offset relative to the parent widget
