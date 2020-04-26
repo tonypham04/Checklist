@@ -1,5 +1,5 @@
 from tkinter import StringVar
-from tkinter import ttk
+from tkinter import Checkbutton
 
 class ChecklistItem:
 
@@ -8,5 +8,5 @@ class ChecklistItem:
         # Allows the Checkbutton value to be dynamic
         self.value = StringVar()
         self.value.set("Imcomplete")
-        self.item = ttk.Checkbutton(master, text=self.task)
+        self.item = Checkbutton(master, text=self.task, fg="#ffffff", bg="#006994")
         self.item.config(variable=self.value, onvalue="Complete", offvalue="Imcomplete")
