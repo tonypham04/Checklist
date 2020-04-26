@@ -2,6 +2,7 @@ from tkinter import ttk
 from tkinter import Button
 from tkinter import Toplevel
 from tkinter import messagebox
+from tkinter import Frame
 from item import ChecklistItem
 
 # REFERENCES
@@ -17,8 +18,8 @@ class Content:
         button_frame_height = checklist_frame_height/8
 
         # Create widgets
-        self.checklist_frame = ttk.Frame(master, height=checklist_frame_height, width=frame_width, relief='solid')
-        self.button_frame = ttk.Frame(master, height=button_frame_height, width=frame_width, relief='solid')
+        self.checklist_frame = Frame(master, height=checklist_frame_height, width=frame_width, relief='solid', background="#006994")
+        self.button_frame = Frame(master, height=button_frame_height, width=frame_width, relief='solid', background="#00008b")
         if checklist is None:
             self.checklist = []
         else:
@@ -44,7 +45,7 @@ class Content:
 
     def add_task(self):
         # Create and configure the window for adding tasks
-        add_window = Toplevel(self.checklist_frame, width=480, height=40)
+        add_window = Toplevel(self.checklist_frame, width=480, height=40, background="#006994")
         add_window.title('Add Task')
         # Prevent window resizing along x and y
         add_window.resizable(False, False)
@@ -57,8 +58,8 @@ class Content:
         add_window.geometry("{}x{}+{}+{}".format(add_window.winfo_width(), add_window.winfo_height(), offset_x, offset_y))
 
         # Create widgets for window to add tasks
-        add_frame = ttk.Frame(add_window)
-        add_label = ttk.Label(add_frame, text="Task Name: ")
+        add_frame = Frame(add_window, background="#006994")
+        add_label = ttk.Label(add_frame, text="Task Name: ", foreground="#ffffff", background="#006994")
         add_entry = ttk.Entry(add_frame, width=48)
         add_entry.bind('<Return>', lambda e: self.submit(add_entry.get(), add_window))
         submit_button = Button(add_frame, text="Submit", command=lambda: self.submit(add_entry.get(), add_window))
