@@ -9,7 +9,7 @@ class App:
     def __init__(self, master):
         # Prevent the app window from being resized
         master.resizable(False, False)
-        default_image_path = 'images/gimp_themes/maple_leaves.png'
+        default_image_path = 'images/picsum/jellyfish_881.png'
         self.banner = Banner(master, default_image_path)
         self.content = Content(master)
 
@@ -31,7 +31,7 @@ class App:
         # THEMES MENU
         themes = Menu(self.menubar)
         gimp_themes = Menu(themes)
-        gimp_themes.add_command(label='Maple Leaves (Default)', command=lambda: self.change_theme('images/gimp_themes/maple_leaves.png'))
+        gimp_themes.add_command(label='Maple Leaves', command=lambda: self.change_theme('images/gimp_themes/maple_leaves.png'))
         gimp_themes.add_cascade(label='Lightning', command=lambda: self.change_theme('images/gimp_themes/lightning.png'))
         gimp_themes.add_cascade(label='Chocolate Swirl', command=lambda: self.change_theme('images/gimp_themes/chocolate_swirl.png'))
         themes.add_cascade(menu=gimp_themes, label = 'GIMP Themes')
