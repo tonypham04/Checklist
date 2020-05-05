@@ -9,8 +9,7 @@ class App:
     def __init__(self, master):
         # Prevent the app window from being resized
         master.resizable(False, False)
-        default_image_path = 'images/picsum/jellyfish_881.png'
-        self.banner = Banner(master, default_image_path)
+        self.banner = Banner(master)
         self.content = Content(master)
 
         # KEYBOARD SHORTCUTS SECTION
@@ -28,15 +27,7 @@ class App:
         file.entryconfig('Add Task', accelerator='CTRL+N')
         self.menubar.add_cascade(menu=file, label='File')
 
-        # THEMES MENU
-        themes = Menu(self.menubar)
-        gimp_themes = Menu(themes)
-        gimp_themes.add_command(label='Maple Leaves', command=lambda: self.change_theme('images/gimp_themes/maple_leaves.png'))
-        gimp_themes.add_cascade(label='Lightning', command=lambda: self.change_theme('images/gimp_themes/lightning.png'))
-        gimp_themes.add_cascade(label='Chocolate Swirl', command=lambda: self.change_theme('images/gimp_themes/chocolate_swirl.png'))
-        themes.add_cascade(menu=gimp_themes, label = 'GIMP Themes')
-        self.menubar.add_cascade(menu=themes, label='Themes')
-
-    def change_theme(self, image_path=None, foreground=None, background=None):
-        if image_path is not None:
-            self.banner.change_image(image_path)
+        # EDIT MENU
+        edit = Menu(self.menubar)
+        edit.add_command(label='Change Banner Color', command=lambda: self.banner.change_banner_color())
+        self.menubar.add_cascade(menu=edit, label='Edit')
