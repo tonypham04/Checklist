@@ -14,7 +14,7 @@ class Banner:
         # Create widgets
         self.banner_frame = ttk.Frame(master, height=180, width=480, relief='solid')
         self.banner_frame.pack_propagate(False)
-        self.banner_label = Label(self.banner_frame, text="Be Yourself", background="#000000", foreground="#ffffff", height=180, width=480)
+        self.banner_label = Label(self.banner_frame, text="Be Yourself", background="#ff8000", foreground="#ffffff", height=180, width=480)
         self.banner_label.config(font=('Impact', 64))
 
         # Place widgets
