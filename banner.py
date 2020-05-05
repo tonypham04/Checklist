@@ -11,8 +11,9 @@ import configparser
 class Banner:
 
     # Constants for the Banner class from the config file
+    config_path = 'configs/config.ini'
     config = configparser.ConfigParser()
-    config.read('configs/config.ini')
+    config.read(config_path)
 
     def __init__(self, master):
         # Banner widget attributes
@@ -38,5 +39,11 @@ class Banner:
         initial_color = self.banner_label['background']
         # The askcolor function will return a tuple containing the RGB and hex code for the chosen color; otherwise None
         new_color = colorchooser.askcolor(initial_color)
-        if new_color is not None:
+        if new_color[1] is not None:
+            Banner.config.set('BANNER', 'banner_background_color', new_color[1])
             self.banner_label.config(background=new_color[1])
+            self.update_config_file()
+
+    def update_config_file(self):
+        with open(Banner.config_path, 'w') as configfile:
+            Banner.config.write(configfile)
