@@ -2,6 +2,7 @@ from tkinter import Menu
 from tkinter import messagebox
 from tkinter import ttk
 from tkinter import Label
+from tkinter import colorchooser
 
 # REFERENCES SECTION
 # Creating a right-click menu with tkinter: https://stackoverflow.com/questions/12014210/tkinter-app-adding-a-right-click-context-menu
@@ -19,3 +20,10 @@ class Banner:
         # Place widgets
         self.banner_frame.pack()
         self.banner_label.pack()
+
+    def change_banner_color(self):
+        initial_color = self.banner_label['background']
+        # The askcolor function will return a tuple containing the RGB and hex code for the chosen color; otherwise None
+        new_color = colorchooser.askcolor(initial_color)
+        if new_color is not None:
+            self.banner_label.config(background=new_color[1])

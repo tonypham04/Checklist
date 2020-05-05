@@ -26,3 +26,8 @@ class App:
         file.add_command(label='Add Task', command=lambda: self.content.add_task())
         file.entryconfig('Add Task', accelerator='CTRL+N')
         self.menubar.add_cascade(menu=file, label='File')
+
+        # EDIT MENU
+        edit = Menu(self.menubar)
+        edit.add_command(label='Change Banner Color', command=lambda: self.banner.change_banner_color())
+        self.menubar.add_cascade(menu=edit, label='Edit')
