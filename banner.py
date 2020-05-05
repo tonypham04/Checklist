@@ -3,19 +3,33 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkinter import Label
 from tkinter import colorchooser
+import configparser
 
 # REFERENCES SECTION
 # Creating a right-click menu with tkinter: https://stackoverflow.com/questions/12014210/tkinter-app-adding-a-right-click-context-menu
 
 class Banner:
-    
+
+    # Constants for the Banner class from the config file
+    config_path = 'configs/config.ini'
+    config = configparser.ConfigParser()
+    config.read(config_path)
+
     def __init__(self, master):
-        
+        # Banner widget attributes
+        banner_width = Banner.config['BANNER'].getint('banner_width')
+        banner_height = Banner.config['BANNER'].getint('banner_height')
+        banner_text = Banner.config['BANNER']['banner_text']
+        banner_background_color = Banner.config['BANNER']['banner_background_color']
+        banner_text_color = Banner.config['BANNER']['banner_text_color']
+        banner_font = Banner.config['BANNER']['banner_font']
+        banner_font_size = Banner.config['BANNER'].getint('banner_font_size')
+
         # Create widgets
-        self.banner_frame = ttk.Frame(master, height=180, width=480, relief='solid')
+        self.banner_frame = ttk.Frame(master, width=banner_width, height=banner_height, relief='solid')
         self.banner_frame.pack_propagate(False)
-        self.banner_label = Label(self.banner_frame, text="Be Yourself", background="#ff8000", foreground="#ffffff", height=180, width=480)
-        self.banner_label.config(font=('Impact', 64))
+        self.banner_label = Label(self.banner_frame, text=banner_text, background=banner_background_color, foreground=banner_text_color, width=banner_width, height=banner_height)
+        self.banner_label.config(font=(banner_font, banner_font_size))
 
         # Place widgets
         self.banner_frame.pack()
@@ -25,5 +39,11 @@ class Banner:
         initial_color = self.banner_label['background']
         # The askcolor function will return a tuple containing the RGB and hex code for the chosen color; otherwise None
         new_color = colorchooser.askcolor(initial_color)
-        if new_color is not None:
+        if new_color[1] is not None:
+            Banner.config.set('BANNER', 'banner_background_color', new_color[1])
             self.banner_label.config(background=new_color[1])
+            self.update_config_file()
+
+    def update_config_file(self):
+        with open(Banner.config_path, 'w') as configfile:
+            Banner.config.write(configfile)
