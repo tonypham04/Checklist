@@ -7,9 +7,12 @@ from item import ChecklistItem
 # REFERENCES
 # Control the placement of a TopLevel Window: 'Creating additional top-level windows' from 'Python GUI Development with Tkinter' course on LinkedIn Learning with Barron Stone [5:27]
 # Fix issue where winfo_width() and winfo_height() always return 1: https://stackoverflow.com/questions/34373533/winfo-width-returns-1-even-after-using-pack
+# Remove the newline character from a string https://stackoverflow.com/questions/9347419/python-strip-with-n
 
 class Content:
     
+    task_list_file_path = 'to_do_list.txt'
+
     def __init__(self, master, checklist=None):
         # Constants
         frame_width = 480
@@ -21,11 +24,23 @@ class Content:
         self.button_frame = ttk.Frame(master, height=button_frame_height, width=frame_width, relief='solid')
         if checklist is None:
             self.checklist = []
+            # Try to open the text file containing the list of to do items
+            # If no such file exist, make one
+            try:
+                list_file_handler = open(Content.task_list_file_path, 'r')
+                if list_file_handler.readable():
+                    to_do_list = list_file_handler.readlines()
+                    for item in to_do_list:
+                        item = item.strip('\n')
+                        self.checklist.append(ChecklistItem(self.checklist_frame, item))
+            except FileNotFoundError:
+                list_file_handler = open(Content.task_list_file_path, 'w')
+            list_file_handler.close()
         else:
             self.checklist = checklist
 
         for task in self.checklist:
-            task.config(command=self.update_state)
+            task.item.config(command=self.update_state)
 
         self.add_button = Button(self.button_frame, text="\u271a Add Task", command=self.add_task)
 
@@ -37,10 +52,12 @@ class Content:
         self.add_button.pack(pady=15)
         self.checklist_frame.pack()
         self.button_frame.pack()
+        self.display_tasks()
 
     def display_tasks(self):
         for task in self.checklist:
             task.item.pack(anchor='w', pady=5, padx=5)
+        self.update_txt_file()
 
     def add_task(self):
         # Create and configure the window for adding tasks
@@ -90,3 +107,10 @@ class Content:
                 self.checklist.remove(task)
                 task.item.destroy()
         self.display_tasks()
+
+    def update_txt_file(self):
+        list_file_handler = open(Content.task_list_file_path, 'w')
+        if list_file_handler.writable():
+            for task in self.checklist:
+                list_file_handler.write(task.item['text'] + '\n')
+        list_file_handler.close()
