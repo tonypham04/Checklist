@@ -7,11 +7,11 @@ The purpose of this checklist program is to provide a simple way of listing task
 * Changes made to the tasks list and banner color are preserved even after the program is closed
 
 ## Running the Program for the First Time
-There are two steps to running the program. First the config file needs to be generated which can be done by running the *create_default_config.py*. This can be easily done by running the following in a terminal window:
+There are two steps to running the program. First the config file needs to be generated which can be done by running the *create_default_config.py*. This can be easily done by running the following in a terminal window (make sure you are inside the "configs" directory):
 ```
 python create_default_config.py
 ```
-This will generate the *config.ini* file which contains the configurations for the banner of the program such as the text, color, font, etc. Next, to actually run the program, perform the following in a terminal window:
+This will generate the *config.ini* file which contains the configurations for the banner of the program such as the text, color, font, etc. Next, to actually run the program, perform the following in a terminal window (make sure you are inside the project root):
 ```
 python main.py
 ```
